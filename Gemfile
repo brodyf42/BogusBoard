@@ -28,6 +28,9 @@ gem 'jbuilder', '~> 2.7'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false
 
+# Use Faker for generating demo data
+gem 'faker'
+
 group :development, :test do
   gem 'database_cleaner'
   gem 'rspec-rails'
