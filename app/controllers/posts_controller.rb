@@ -4,7 +4,7 @@ class PostsController < ApplicationController
     end
 
     def show
-        @post = Post.find(params[:id])
+        find_post
     end
 
     def new
@@ -30,6 +30,21 @@ class PostsController < ApplicationController
     end
 
     def edit
+        find_post
+    end
+
+    def update
+        find_post
+        body = params[:post][:body]
+        if @post.update(body: body)
+            redirect_to @post
+        else
+            render :edit
+        end
+    end
+
+    private
+    def find_post
         @post = Post.find(params[:id])
     end
 end
