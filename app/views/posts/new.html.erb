@@ -1,23 +1,30 @@
-<h1>New Post</h1>
 
-<%= form_with(model: @post) do |form| %>
-    <% if @post.errors.any? %>
-        <div id="error_explanation">
-        <h2>The post could not be saved. Please address the <%= pluralize(@post.errors.count, "error") %>.</h2>
-        <ul>
-            <% @post.errors.each do |error| %>
-            <li><%= error.full_message %></li>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h2>New Post</h2>
+    </div>
+    <div class="panel-body">
+        <%= form_with(model: @post) do |form| %>
+            <% if @post.errors.any? %>
+                <div id="error_explanation">
+                <h2>The post could not be saved. Please address the <%= pluralize(@post.errors.count, "error") %>.</h2>
+                <ul>
+                    <% @post.errors.each do |error| %>
+                    <li><%= error.full_message %></li>
+                    <% end %>
+                </ul>
+                </div>
             <% end %>
-        </ul>
-        </div>
-    <% end %>
-
-    <%= form.label :user_email %>
-    <%= form.text_field :user_email %>
-    </br>
-    <%= form.label :body %>
-    <%= form.text_area :body %>
-    </br>
-    <%= form.submit %>
-
-<% end %>
+        
+            <div class="form-group">
+                <%= form.label :user_email %>
+                <%= form.text_field :user_email, class: 'form-control' %>
+            </div>
+            <div class="form-group">
+                <%= form.label :body %>
+                <%= form.text_area :body, class: 'form-control' %>
+            </div>
+            <%= form.submit %>
+        <% end %>
+    </div>
+</div>
