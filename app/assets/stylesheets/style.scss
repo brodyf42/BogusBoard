@@ -1,2 +1,14 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
+
+#body-spacer{
+	height: 75px;
+}
+
+.navbar{
+	font-size: 1.25em;
+}
+
+.navbar-brand{
+    font-size: 1.5em
+}

@@ -11,6 +11,22 @@
   </head>
 
   <body>
-    <%= yield %>
+    <nav class="navbar navbar-default navbar-inverse navbar-fixed-top custom-font">
+      <div class="container">
+        <div class="navbar-header">
+          <a href="<%= posts_path %>" class="navbar-brand">Bogus Board</a>
+        </div>
+        <ul class="nav navbar-nav">
+          <li><%= link_to "Home", root_path %></li>
+          <li><%= link_to "New post", controller: "posts", action: "new" %></li>
+        </ul>
+      </div>
+    </nav>
+
+    <div id="body-spacer"></div>
+
+    <div id="main-content" class="container">
+      <%= yield %>
+    </div>
   </body>
 </html>
