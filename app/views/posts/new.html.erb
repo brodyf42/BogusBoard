@@ -1,0 +1,23 @@
+<h1>New Post</h1>
+
+<%= form_with(model: @post) do |form| %>
+    <% if @post.errors.any? %>
+        <div id="error_explanation">
+        <h2>The post could not be saved. Please address the <%= pluralize(@post.errors.count, "error") %>.</h2>
+        <ul>
+            <% @post.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+            <% end %>
+        </ul>
+        </div>
+    <% end %>
+
+    <%= form.label :user_email %>
+    <%= form.text_field :user_email %>
+    </br>
+    <%= form.label :body %>
+    <%= form.text_area :body %>
+    </br>
+    <%= form.submit %>
+
+<% end %>
