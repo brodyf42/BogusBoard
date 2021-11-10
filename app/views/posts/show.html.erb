@@ -26,7 +26,12 @@ Posted by:  <%= @post.user.display_name%> </br>
         <% @post.comments.each do |comment| %>
             <li>
                 <h4><%= comment.body %></h4>
-                By: <%= comment.user.display_name %>
+                By: <%= comment.user.display_name %> </br>
+                <%= form_with url: comment_path, method: :delete do |form|  %>
+                    <%= form.hidden_field :post_id, value: @post.id %>
+                    <%= form.hidden_field :comment_id, value: comment.id %>
+                    <%= form.submit "Delete" %>
+                <% end %>
             </li>
         <% end %>
     </ul>
