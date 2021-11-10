@@ -2,7 +2,9 @@
 
 
 <h2><%= @post.body %></h2>
-Posted by:  <%= @post.user.display_name%>
+Posted by:  <%= @post.user.display_name%> </br>
+<%= link_to 'Edit', edit_post_path(@post) %>
+<%= link_to 'Delete', @post, method: :delete, data: { confirm: 'Are you sure?' } %>
 
 <hr>
 <% if @post.comments.count > 0 %>
@@ -15,7 +17,6 @@ Posted by:  <%= @post.user.display_name%>
             </li>
         <% end %>
     </ul>
-
 <% else %>
     <h4>This post has no comments.</h4>
 <% end %>
