@@ -1,28 +1,50 @@
-<h1>Posts Index</h1>
+<h1>Recent Posts</h1>
 
 <% @posts.each do |post| %>
-    <p>
-        <h3>
-            <img src="<%= gravatar_img_url(post.user.email) %>">
-            <%= post.body %> 
-        </h3>
-        Author: <%= post.user.display_name %> </br>
-        <ul>
-        <% post.comments.each do |comment| %>
-            <li>
-                <h4>
-                    <img src="<%= gravatar_img_url(comment.user.email) %>">
-                    <%= comment.body %>
-                </h4>
-                By: <%= comment.user.display_name %> </br>
-                <%= form_with url: comment_path, method: :delete do |form|  %>
-                    <%= form.hidden_field :post_id, value: post.id %>
-                    <%= form.hidden_field :comment_id, value: comment.id %>
-                    <%= form.submit "Delete" %>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <div class="media">
+                <div class="media-left">
+                    <a href="<%= post_path(post.id) %>">
+                        <img src="<%= gravatar_img_url(post.user.email) %>">
+                    </a>
+                </div>
+                <div class="media-body">
+                    <h3 class="media-heading"><%= post.body %></h3>
+                </div>
+                <div class="media-right">
+                    
+                </div>
+            </div>
+        </div>
+        <div class="panel-body comment-list">
+            <% if post.comments.count == 0 %>
+                <span>This post does not have any comments yet.</span>
+            <% else %>
+                <% post.comments.order(created_at: :desc).limit(comment_preview_limit).each do |comment| %>
+                    <div class="media">
+                        <div class="media-left">
+                            <img src="<%= gravatar_img_url(comment.user.email) %>">
+                        </div>
+                        <div class="media-body">
+                            <h4 class="media-heading"><%= comment.body %></h4>
+                        </div>
+                    </div>
                 <% end %>
-            </li>
-        <% end %>
-    </ul>
-    </p>
-    <hr>
+                <% if post.comments.count > comment_preview_limit %>
+                    </br>
+                    <span>(<%= post.comments.count - comment_preview_limit%> more comments)</span>
+                    <%= link_to "view full thread", post_path(post.id) %>
+                <% end %>
+            <% end %>
+        </div>
+        <div class="panel-footer">
+            <%= post.user.display_name %> created post at <%= post.created_at %>
+            <% if post.updated_at > post.created_at %>
+                <div class="pull-right">
+                    Last edited <%= time_ago_in_words(post.updated_at) %> ago
+                </div>
+            <% end %>
+        </div>
+    </div>
 <% end %>
