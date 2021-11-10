@@ -7,6 +7,19 @@ Posted by:  <%= @post.user.display_name%> </br>
 <%= link_to 'Delete', @post, method: :delete, data: { confirm: 'Are you sure?' } %>
 
 <hr>
+<h4>Add a comment</h4>
+<%= form_with url: comment_path, method: :post do |form|  %>
+    <%= form.hidden_field :post_id, value: @post.id %>
+    <%= form.label :user_email %>
+    <%= form.text_field :user_email %>
+    </br>
+    <%= form.label :body %>
+    <%= form.text_area :body %>
+    </br>
+    <%= form.submit "Add Comment" %>
+<% end %>
+<hr>
+
 <% if @post.comments.count > 0 %>
     <h3>Comments</h3>
     <ul>

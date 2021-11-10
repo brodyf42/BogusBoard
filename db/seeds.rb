@@ -16,7 +16,7 @@ posts = []
 # demo users for interactions
 (1..5).each do |i|
     display_name = "Demo User #{i}"
-    email = "demo#{i}@bogusboard.biz"
+    email = "demo#{i}@bb.biz"
     password_digest = Digest::MD5.hexdigest "demo#{i}"
     user = User.new(email: email, display_name: display_name, password_digest: password_digest)
     if user.save
