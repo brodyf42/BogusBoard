@@ -1,43 +1,69 @@
-<h1>Post Detail</h1>
 
+<div class="panel panel-default">
+    <div class="panel-body">
+        <h2>
+            <img src="<%= gravatar_img_url(@post.user.email) %>">
+            <%= @post.body %>
+        </h2>
+    </div>
+    <div class="panel-footer">
+        <%= @post.user.display_name %> created post at <%= @post.created_at %>
+        <% if @post.updated_at > @post.created_at %>
+            <div class="pull-right">
+                Last edited <%= time_ago_in_words(@post.updated_at) %> ago
+            </div>
+        <% end %>
+    </div>
+</div>
 
-<h2>
-    <img src="<%= gravatar_img_url(@post.user.email) %>">
-    <%= @post.body %>
-</h2>
-Posted by:  <%= @post.user.display_name%> </br>
-<%= link_to 'Edit', edit_post_path(@post) %>
-<%= link_to 'Delete', @post, method: :delete, data: { confirm: 'Are you sure?' } %>
+<%= link_to 'Edit', edit_post_path(@post), class: 'btn btn-primary' %>
+<%= link_to 'Delete', @post, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
 
 <hr>
-<h4>Add a comment</h4>
-<%= form_with url: comment_path, method: :post do |form|  %>
-    <%= form.hidden_field :post_id, value: @post.id %>
-    <%= form.label :user_email %>
-    <%= form.text_field :user_email %>
-    </br>
-    <%= form.label :body %>
-    <%= form.text_area :body %>
-    </br>
-    <%= form.submit "Add Comment" %>
-<% end %>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4>Add a comment</h4>
+    </div>
+    <div class="panel-body">
+        <%= form_with url: comment_path, method: :post do |form|  %>
+            <%= form.hidden_field :post_id, value: @post.id %>
+            <div class="form-group">
+                <%= form.label :user_email %>
+                <%= form.text_field :user_email, class: 'form-control' %>
+            </div>
+            <div class="form-group">
+                <%= form.label :body %>
+                <%= form.text_area :body, class: 'form-control' %>
+            </div>
+            <%= form.submit "Add Comment", class: 'btn btn-default' %>
+        <% end %>
+    </div>
+</div>
 <hr>
 
 <% if @post.comments.count > 0 %>
     <h3>Comments</h3>
-    <ul>
+
+    <ul class="list-group">
         <% @post.comments.each do |comment| %>
-            <li>
-                <h4>
-                    <img src="<%= gravatar_img_url(comment.user.email) %>">
-                    <%= comment.body %>
-                </h4>
-                By: <%= comment.user.display_name %> </br>
-                <%= form_with url: comment_path, method: :delete do |form|  %>
-                    <%= form.hidden_field :post_id, value: @post.id %>
-                    <%= form.hidden_field :comment_id, value: comment.id %>
-                    <%= form.submit "Delete" %>
-                <% end %>
+            <li class="list-group-item">
+                <div class="media">
+                    <div class="media-left">
+                        <img src="<%= gravatar_img_url(comment.user.email) %>">
+                    </div>
+                    <div class="media-body">
+                        <h4 class="media-heading"><%= comment.body %></h4>
+                        <em>Submitted by <%= comment.user.display_name %> at <%= comment.created_at %></em>
+                    </div>
+                    <div class="media-right">
+                        <%= form_with url: comment_path, method: :delete do |form|  %>
+                            <%= form.hidden_field :post_id, value: @post.id %>
+                            <%= form.hidden_field :comment_id, value: comment.id %>
+                            <%= form.submit "Delete", class: 'btn btn-danger' %>
+                        <% end %>
+                    </div>
+                </div>
             </li>
         <% end %>
     </ul>

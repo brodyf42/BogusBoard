@@ -28,6 +28,7 @@
                         </div>
                         <div class="media-body">
                             <h4 class="media-heading"><%= comment.body %></h4>
+                            <em>Submitted by <%= comment.user.display_name %> at <%= comment.created_at %></em>
                         </div>
                     </div>
                 <% end %>
