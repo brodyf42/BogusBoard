@@ -28,4 +28,8 @@ class PostsController < ApplicationController
             render :new
         end
     end
+
+    def edit
+        @post = Post.find(params[:id])
+    end
 end
