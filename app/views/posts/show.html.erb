@@ -1,0 +1,22 @@
+<h1>Post Detail</h1>
+
+
+<h2><%= @post.body %></h2>
+Posted by:  <%= @post.user.display_name%>
+
+<hr>
+<% if @post.comments.count > 0 %>
+    <h3>Comments</h3>
+    <ul>
+        <% @post.comments.each do |comment| %>
+            <li>
+                <h4><%= comment.body %></h4>
+                By: <%= comment.user.display_name %>
+            </li>
+        <% end %>
+    </ul>
+
+<% else %>
+    <h4>This post has no comments.</h4>
+<% end %>
+
