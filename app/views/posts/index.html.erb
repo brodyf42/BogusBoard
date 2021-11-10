@@ -13,7 +13,7 @@
                     <h3 class="media-heading"><%= post.body %></h3>
                 </div>
                 <div class="media-right">
-                    
+                    <%= link_to "Add Comment / Edit", post_path(post.id), class: 'btn btn-primary btn-sm' %>
                 </div>
             </div>
         </div>
@@ -34,7 +34,7 @@
                 <% end %>
                 <% if post.comments.count > comment_preview_limit %>
                     </br>
-                    <span>(<%= post.comments.count - comment_preview_limit%> more comments)</span>
+                    <span>(<%= excess_comment_count(post) %> more <%= 'comment'.pluralize(excess_comment_count(post)) %>)</span>
                     <%= link_to "view full thread", post_path(post.id) %>
                 <% end %>
             <% end %>
