@@ -5,14 +5,9 @@
     </div>
     <div class="panel-body">
         <%= form_with(model: @post) do |form| %>
-            <% if @post.errors.any? %>
-                <div id="error_explanation">
-                    <h4>The post could not be saved. Please address the following <%= 'error'.pluralize(@post.errors.count) %>:</h4>
-                    <ul>
-                        <% @post.errors.each do |error| %>
-                        <li><%= error.full_message %></li>
-                        <% end %>
-                    </ul>
+            <% flash.each do |type, message| %>
+                <div class="alert alert-danger">
+                    <%= message %>
                 </div>
             <% end %>
         

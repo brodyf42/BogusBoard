@@ -15,11 +15,19 @@ class PostsController < ApplicationController
         user_email = params[:post][:user_email].strip.downcase
         user = User.find_by(email: user_email)
         if !user
+            flash.now[:error] = "You must provide an email address for a user that exists."
             @post = Post.new
             render :new and return
         end
 
         body = params[:post][:body]
+
+        if body.empty?
+            flash.now[:error] = "You cannot submit a post without a body."
+            @post = Post.new
+            render :new and return
+        end
+
         @post = Post.new(user_id: user.id, body: body, active: true)
 
         if @post.save
@@ -36,6 +44,12 @@ class PostsController < ApplicationController
     def update
         find_post
         body = params[:post][:body]
+
+        if body.empty?
+            flash.now[:error] = "You cannot submit a post without a body."
+            render :edit and return
+        end
+
         if @post.update(body: body)
             redirect_to @post
         else

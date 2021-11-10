@@ -27,6 +27,11 @@
     </div>
     <div class="panel-body">
         <%= form_with url: comment_path, method: :post do |form|  %>
+            <% flash.each do |type, message| %>
+                <div class="alert alert-danger">
+                    <%= message %>
+                </div>
+            <% end %>
             <%= form.hidden_field :post_id, value: @post.id %>
             <div class="form-group">
                 <%= form.label :user_email %>

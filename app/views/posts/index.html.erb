@@ -1,51 +1,56 @@
-<h1>Recent Posts</h1>
 
-<% @posts.each do |post| %>
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <div class="media">
-                <div class="media-left">
-                    <a href="<%= post_path(post.id) %>">
-                        <img src="<%= gravatar_img_url(post.user.email) %>">
-                    </a>
-                </div>
-                <div class="media-body">
-                    <h3 class="media-heading"><%= post.body %></h3>
-                </div>
-                <div class="media-right">
-                    <%= link_to "Add Comment / Edit", post_path(post.id), class: 'btn btn-primary btn-sm' %>
+<% if @posts and @posts.any? %>
+    <h1>Recent Posts</h1>
+
+    <% @posts.each do |post| %>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="media">
+                    <div class="media-left">
+                        <a href="<%= post_path(post.id) %>">
+                            <img src="<%= gravatar_img_url(post.user.email) %>">
+                        </a>
+                    </div>
+                    <div class="media-body">
+                        <h3 class="media-heading"><%= post.body %></h3>
+                    </div>
+                    <div class="media-right">
+                        <%= link_to "Add Comment / Edit", post_path(post.id), class: 'btn btn-primary btn-sm' %>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="panel-body comment-list">
-            <% if post.comments.count == 0 %>
-                <span>This post does not have any comments yet.</span>
-            <% else %>
-                <% post.comments.order(created_at: :desc).limit(comment_preview_limit).each do |comment| %>
-                    <div class="media">
-                        <div class="media-left">
-                            <img src="<%= gravatar_img_url(comment.user.email) %>">
+            <div class="panel-body comment-list">
+                <% if post.comments.count == 0 %>
+                    <span>This post does not have any comments yet.</span>
+                <% else %>
+                    <% post.comments.order(created_at: :desc).limit(comment_preview_limit).each do |comment| %>
+                        <div class="media">
+                            <div class="media-left">
+                                <img src="<%= gravatar_img_url(comment.user.email) %>">
+                            </div>
+                            <div class="media-body">
+                                <h4 class="media-heading"><%= comment.body %></h4>
+                                <em>Submitted by <%= comment.user.display_name %> at <%= comment.created_at %></em>
+                            </div>
                         </div>
-                        <div class="media-body">
-                            <h4 class="media-heading"><%= comment.body %></h4>
-                            <em>Submitted by <%= comment.user.display_name %> at <%= comment.created_at %></em>
-                        </div>
+                    <% end %>
+                    <% if post.comments.count > comment_preview_limit %>
+                        </br>
+                        <span>(<%= excess_comment_count(post) %> more <%= 'comment'.pluralize(excess_comment_count(post)) %>)</span>
+                        <%= link_to "view full thread", post_path(post.id) %>
+                    <% end %>
+                <% end %>
+            </div>
+            <div class="panel-footer">
+                <%= post.user.display_name %> created post at <%= post.created_at %>
+                <% if post.updated_at > post.created_at %>
+                    <div class="pull-right">
+                        Last edited <%= time_ago_in_words(post.updated_at) %> ago
                     </div>
                 <% end %>
-                <% if post.comments.count > comment_preview_limit %>
-                    </br>
-                    <span>(<%= excess_comment_count(post) %> more <%= 'comment'.pluralize(excess_comment_count(post)) %>)</span>
-                    <%= link_to "view full thread", post_path(post.id) %>
-                <% end %>
-            <% end %>
+            </div>
         </div>
-        <div class="panel-footer">
-            <%= post.user.display_name %> created post at <%= post.created_at %>
-            <% if post.updated_at > post.created_at %>
-                <div class="pull-right">
-                    Last edited <%= time_ago_in_words(post.updated_at) %> ago
-                </div>
-            <% end %>
-        </div>
-    </div>
+    <% end %>
+<% else %>
+    <h2>It seem that there are no posts yet. Please feel free to get things started by using the button in the menu bar.</h2>
 <% end %>
