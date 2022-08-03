@@ -5,12 +5,6 @@
     </div>
     <div class="panel-body">
         <%= form_with(model: @post) do |form| %>
-            <% flash.each do |type, message| %>
-                <div class="alert alert-danger">
-                    <%= message %>
-                </div>
-            <% end %>
-        
             <div class="form-group">
                 <label for="author_name">Author</label>
                 <div id="author_name"><%= @post.user.display_name %></div>

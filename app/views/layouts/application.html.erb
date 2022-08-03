@@ -26,6 +26,10 @@
     <div id="body-spacer"></div>
 
     <div id="main-content" class="container">
+      <% flash.each do |_, flash_message| %>
+        <div class="alert alert-info"><%= flash_message %></div>
+      <% end %>
+
       <%= yield %>
     </div>
   </body>

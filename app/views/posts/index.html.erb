@@ -35,7 +35,7 @@
                         </div>
                     <% end %>
                     <% if post.comments.count > comment_preview_limit %>
-                        </br>
+                        <br />
                         <span>(<%= excess_comment_count(post) %> more <%= 'comment'.pluralize(excess_comment_count(post)) %>)</span>
                         <%= link_to "view full thread", post_path(post.id) %>
                     <% end %>
